@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return 3;
+            return 4;
         }
 
         @Override
@@ -167,7 +167,9 @@ public class MainActivity extends AppCompatActivity {
                 case 2:
                     imgClothes.setImageResource(R.drawable.top3);
                     break;
-
+                case 3:
+                    imgClothes.setImageResource(R.drawable.top4);
+                    break;
             }
             return view;
         }
@@ -188,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return 3;
+            return 4;
         }
 
         @Override
@@ -218,12 +220,15 @@ public class MainActivity extends AppCompatActivity {
             switch (getArguments().getInt("a")) {
                 case 0:
                     imgClothes.setImageResource(R.drawable.bottom1);
-                break;
+                    break;
                 case 1:
                     imgClothes.setImageResource(R.drawable.bottom2);
                     break;
                 case 2:
                     imgClothes.setImageResource(R.drawable.bottom3);
+                    break;
+                case 3:
+                    imgClothes.setImageResource(R.drawable.bottom4);
                     break;
             }
             return view;

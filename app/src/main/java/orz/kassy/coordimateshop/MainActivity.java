@@ -21,6 +21,9 @@ import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import butterknife.OnClick;
@@ -32,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager mViewPager1;
     private SectionsPagerAdapter2 mSectionsPagerAdapter2;
     private ViewPager mViewPager2;
+    private ImageView imageView;
 
     @InjectView(R.id.viewAll)
     View mViewAll;
@@ -40,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        final ImageView imageView = (ImageView) findViewById(R.id.imgGetParse);
+        imageView = (ImageView) findViewById(R.id.imgGetParse);
         mSectionsPagerAdapter1 = new SectionsPagerAdapter(getSupportFragmentManager());
         mSectionsPagerAdapter2 = new SectionsPagerAdapter2(getSupportFragmentManager());
 
@@ -50,6 +54,11 @@ public class MainActivity extends AppCompatActivity {
         mViewPager2.setAdapter(mSectionsPagerAdapter2);
         ButterKnife.inject(this);
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         ParseQuery<ParseObject> query = ParseQuery.getQuery("TestObject");
         query.orderByDescending("createdAt");
         query.getFirstInBackground(new GetCallback<ParseObject>() {
@@ -76,7 +85,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-
     }
 
     @OnClick(R.id.btnSendCoordinate)
@@ -90,8 +98,21 @@ public class MainActivity extends AppCompatActivity {
         saveBitmapAtParse(screenShot);
     }
 
+    /**
+     * コーディネートをParseに送信
+     * @param screenShot
+     */
     private void saveBitmapAtParse(Bitmap screenShot) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        screenShot.compress(Bitmap.CompressFormat.PNG, 100, stream);
+        byte[] image = stream.toByteArray();
+        ParseFile testFile = new ParseFile("CoordinateImage", image);
+        testFile.saveInBackground();
 
+        ParseObject testObject = new ParseObject("CoordinateObject");
+        testObject.put("hoge", "fuga1810");
+        testObject.put("image", testFile);
+        testObject.saveInBackground();
     }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
@@ -148,7 +169,6 @@ public class MainActivity extends AppCompatActivity {
                     break;
 
             }
-
             return view;
         }
     }
@@ -205,11 +225,8 @@ public class MainActivity extends AppCompatActivity {
                 case 2:
                     imgClothes.setImageResource(R.drawable.bottom3);
                     break;
-
             }
-
             return view;
         }
     }
-
 }

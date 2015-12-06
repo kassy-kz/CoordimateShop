@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     private ViewPager mViewPager1;
     private SectionsPagerAdapter2 mSectionsPagerAdapter2;
     private ViewPager mViewPager2;
-    private ImageView imageView;
+    private CustomImageView imageView;
 
     @InjectView(R.id.viewAll)
     View mViewAll;
@@ -44,7 +44,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        imageView = (ImageView) findViewById(R.id.imgGetParse);
+        imageView = (CustomImageView) findViewById(R.id.imgGetParse);
+//        imageView.setImageResource(R.mipmap.ic_launcher);
+
         mSectionsPagerAdapter1 = new SectionsPagerAdapter(getSupportFragmentManager());
         mSectionsPagerAdapter2 = new SectionsPagerAdapter2(getSupportFragmentManager());
 

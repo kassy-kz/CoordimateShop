@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.parse.GetCallback;
 import com.parse.GetDataCallback;
@@ -98,7 +99,10 @@ public class MainActivity extends AppCompatActivity {
         Bitmap screenShot = Bitmap.createBitmap(cache);
         mViewAll.setDrawingCacheEnabled(false);
         saveBitmapAtParse(screenShot);
+
+        Toast.makeText(this, "コーディネートが送信されました", Toast.LENGTH_LONG).show();
     }
+
 
     /**
      * コーディネートをParseに送信
